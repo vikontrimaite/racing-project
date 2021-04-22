@@ -45,9 +45,9 @@ class BetterController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'surname' => 'required',
-            'bet' => 'required'
+            'name' => 'required|max: 20',
+            'surname' => 'required|max: 20',
+            'bet' => 'required|gte: 0'
         ]);
 
         $better=new better();
@@ -91,9 +91,9 @@ class BetterController extends Controller
     public function update(Request $request, Better $better)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'surname' => 'required',
-            'bet' => 'required'
+            'name' => 'required|max: 20',
+            'surname' => 'required|max: 20',
+            'bet' => 'required|gte: 0'
         ]);
 
         $better->fill($request->all());

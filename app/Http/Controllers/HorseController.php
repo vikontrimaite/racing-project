@@ -35,26 +35,30 @@ class HorseController extends Controller
      */
     public function store(Request $request)
     {
+
+        $horse = new Horse();
+
         $this->validate($request, [
-            'name' => 'required',
-            'runs' => 'required',
-            'wins' => 'required',
+            'name' => 'required| max: 20',
+            'runs' => 'required|gte: 0',
+            'wins' => 'required|gte: 0',
             'about' => 'required'
         ]);
 
-        $horse = new Horse();
-     // can be used for seeing the insides of the incoming request
-         // dd($request->all()); die();
-        
+        // 'wins' => 'required|gte: 0|max:' . $horse->runs  . '',
+
+        // if ($horse->wins > $horse->runs){ 
+        //     return back()->withErrors(['error' => ['Laimėtų rungtynių skaičius negali būti įvestas didesnis nei dalyvautų']]);
+        // }
+
+        // if ($request->runs < $request->wins) {
+        //     return redirect()->route('horse.create')->with('status_error', 'Horse addition failed. Number of runs cannot be greater than number of wins.');
+        // }
+
          $horse->fill($request->all());
          $horse->save();
 
-        if ($horse->wins > $horse->runs){ 
-            return back()->withErrors(['error' => ['Laimėtų rungtynių skaičius negali būti įvestas didesnis nei dalyvautų']]);
-        }
-
-        // metą errorą, bet vis tiek išsaugo arklį
-
+        
         return redirect()->route('horse.index');
     }
 
@@ -90,11 +94,15 @@ class HorseController extends Controller
     public function update(Request $request, Horse $horse)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'runs' => 'required',
-            'wins' => 'required',
+            'name' => 'required|max: 20',
+            'runs' => 'required|gte:0',
+            'wins' => 'required|gte:0',
             'about' => 'required'
         ]);
+
+        if ($request->runs < $request->wins) {
+            return redirect()->route('horse.create')->with('status_error', 'Horse addition failed. Number of runs cannot be greater than number of wins.');
+        }
 
         $horse->fill($request->all());
         $horse->save();

@@ -34,7 +34,7 @@
                 <form action={{ route('better.destroy', $better->id) }} method="POST">
                     <a class="btn btn-success" href={{ route('better.edit', $better->id) }}>Redaguoti</a>
                     @csrf @method('delete')
-                    <input type="submit" class="btn btn-danger" value="Trinti"/>
+                    <input type="submit" class="btn btn-danger"  onclick="return confirm('Are you sure?')" value="Trinti"/>
                 </form>
             </td>
         </tr>

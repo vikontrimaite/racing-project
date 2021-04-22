@@ -23,7 +23,7 @@
                 <form action={{ route('horse.destroy', $horse->id) }} method="POST">
                     <a class="btn btn-success" href={{ route('horse.edit', $horse->id) }}>Redaguoti</a>
                     @csrf @method('delete')
-                    <input type="submit" class="btn btn-danger" value="Trinti" />
+                    <input type="submit" class="btn btn-danger"  onclick="return confirm('Are you sure?')" value="Trinti" />
                 </form>
             </td>
 
